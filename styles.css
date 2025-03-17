@@ -1,23 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playwrite+RO:wght@100..400&display=swap');
 
-body {
-  font-family: 'Nunito', sans-serif;
-}
-
 
 *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
   
 body {
     background: #F9FAFE;
     font-family: 'Nunito', sans-serif;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 button {
-    all: unset; /* Elimina todos los estilos predeterminados */
+    all: unset;
 }
 
 .header-top {
@@ -73,4 +76,35 @@ button {
     color: #0039D7;
 }
 
-  
+.contenido-principal {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 10px auto;
+    padding: 10px 50px;
+}
+
+.grafica-nivel-agua, 
+.grafica-nivel-precipitaciones, 
+.alerta-nivel-agua, 
+.actuador-alarma,
+.alerta-nivel-precipitaciones {
+    width: 100%;
+    height: 100%; 
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 4, 255, 0.05);
+    padding: 20px;
+}
+
+.actuador-alarma {
+    grid-column: span 2; /* Ocupar dos columnas */
+    text-align: center;
+    background: #ddd;
+}
+
