@@ -80,29 +80,122 @@ button {
     flex: 1;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 306px 306px auto;
+    grid-template-rows: auto auto auto;
     gap: 10px;
     width: 100%;
-    padding: 10px 50px; /* Mismo padding horizontal que el header */
+    padding: 10px 50px;
     box-sizing: border-box;
 }
 
-.grafica-nivel-agua, 
-.grafica-nivel-precipitaciones, 
-.alerta-nivel-agua, 
+.grafica-nivel-agua,
+.grafica-nivel-precipitaciones,
+.alerta-nivel-agua,
 .actuador-alarma,
 .alerta-nivel-precipitaciones {
     width: 100%;
-    height: 100%; 
-    border-radius: 15px;
+    height: 100%;
+    border-radius: 20px;
     background: white;
     box-shadow: 0 2px 6px rgba(0, 4, 255, 0.05);
-    padding: 20px;
 }
 
 .actuador-alarma {
-    grid-column: span 2; /* Ocupar dos columnas */
+    grid-column: span 2;
     text-align: center;
     background: #ddd;
+}
+
+.alerta-nivel-agua {
+    display: flex;
+    padding: 10px;
+}
+
+.alerta-nivel-agua .nivel-actual {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 20px;
+    background: #0039D7;
+}
+
+.alerta-nivel-agua .nivel-actual p {
+    font-size: 20px;
+    font-weight: 250;
+    color: #fff;
+}
+
+.alerta-nivel-agua .nivel-actual span {
+    font-size: 64px;
+    font-weight: 900;
+    color: #fff;
+}
+
+.alerta-nivel-agua .estado-actual {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.alerta-nivel-agua .estado-actual p {
+    font-size: 20px;
+    font-weight: 250;
+    color: #0039D7;
+}
+
+.alerta-nivel-agua .estado-actual span {
+    font-size: 64px;
+    font-weight: 900;
+    color: #0039D7;
+}
+
+.alerta-nivel-precipitaciones {
+    display: flex;
+    padding: 10px;
+}
+
+.alerta-nivel-precipitaciones .nivel-actual {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 20px;
+    background: #5725CD;
+}
+
+.alerta-nivel-precipitaciones .nivel-actual p {
+    font-size: 20px;
+    font-weight: 250;
+    color: #fff;
+}
+
+.alerta-nivel-precipitaciones .nivel-actual span {
+    font-size: 64px;
+    font-weight: 900;
+    color: #fff;
+}
+
+.alerta-nivel-precipitaciones .estado-actual {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.alerta-nivel-precipitaciones .estado-actual p {
+    font-size: 20px;
+    font-weight: 250;
+    color: #5725CD;
+}
+
+.alerta-nivel-precipitaciones .estado-actual span {
+    font-size: 64px;
+    font-weight: 900;
+    color: #5725CD;
 }
 
