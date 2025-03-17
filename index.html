@@ -48,13 +48,13 @@
             </section>
 
             <section class="alerta-nivel-agua">
-                <div class="nivel-actual">
+                <div class="nivel-actual alto">
                     <p>Último valor:</p>
                     <span>6 cm</span>
                     <p>Tomado hace 1 minuto</p>
                 </div>
                 
-                <div class="estado-actual">
+                <div class="estado-actual alto">
                     <p>Estado del nivel del agua:</p>
                     <span>¡Alta!</span>
                     <p>Se considera alto de 10 cm en adelante</p>
@@ -62,13 +62,13 @@
             </section>
 
             <section class="alerta-nivel-precipitaciones">
-                <div class="nivel-actual">
+                <div class="nivel-actual moderado">
                     <p>Último valor:</p>
                     <span>10 mm</span>
                     <p>Tomado hace 1 minuto</p>
                 </div>
 
-                <div class="estado-actual">
+                <div class="estado-actual moderado">
                     <p>Estado del nivel del precipitaciones:</p>
                     <span>Moderada</span>
                     <p>Se considera lluvia moderada de 4 cm ~ 6 cm</p>
@@ -76,9 +76,38 @@
             </section>
 
             <section class="actuador-alarma">
-                
+                <div class="titulo-alarma">
+                    <span>Alarma apagada</span>
+                    <svg
+                        width="76"
+                        height="76"
+                        viewBox="0 0 76 76"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+
+                        <path d="M12.6667 60.1667H63.3334V53.8333H12.6667V60.1667ZM25.3334
+                                41.1667H31.6667V31.6667C31.6667 29.925 32.2868 28.434 33.5271
+                                27.1938C34.7674 25.9535 36.2584 25.3333 38 25.3333V19C34.5167
+                                19 31.5348 20.2403 29.0542 22.7208C26.5737 25.2014 25.3334 28.1833
+                                25.3334 31.6667V41.1667ZM22.1667 47.5H53.8334V31.6667C53.8334 27.2861
+                                52.2896 23.5521 49.2021 20.4646C46.1146 17.3771 42.3806 15.8333 38
+                                15.8333C33.6195 15.8333 29.8855 17.3771 26.798 20.4646C23.7105 23.5521
+                                22.1667 27.2861 22.1667 31.6667V47.5ZM12.6667 66.5C10.925 66.5 9.43407
+                                65.8799 8.19379 64.6396C6.95351 63.3993 6.33337 61.9083 6.33337
+                                60.1667V53.8333C6.33337 52.0917 6.95351 50.6007 8.19379 49.3604C9.43407
+                                48.1201 10.925 47.5 12.6667 47.5H15.8334V31.6667C15.8334 25.4917 17.9841
+                                20.2535 22.2855 15.9521C26.5868 11.6507 31.825 9.5 38 9.5C44.175 9.5 49.4132
+                                11.6507 53.7146 15.9521C58.016 20.2535 60.1667 25.4917 60.1667 31.6667V47.5H63.3334C65.075
+                                47.5 66.566 48.1201 67.8063 49.3604C69.0466 50.6007 69.6667 52.0917 69.6667 53.8333V60.1667C69.6667
+                                61.9083 69.0466 63.3993 67.8063 64.6396C66.566 65.8799 65.075 66.5 63.3334 66.5H12.6667Z" 
+                                fill="#1E1B39"
+                                fill-opacity="0.7"/>
+                        
+                    </svg>
+                </div>
+
+                <p class="mensaje-alarma">Click para encender</p>
             </section>
         </main>
-        
     </body>
 </html>

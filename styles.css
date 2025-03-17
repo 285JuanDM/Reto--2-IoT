@@ -100,9 +100,39 @@ button {
 }
 
 .actuador-alarma {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     grid-column: span 2;
     text-align: center;
-    background: #ddd;
+    background: #EFEFEF;
+    transition: ease-in-out all 0.2s;
+    outline: 1px solid rgba(0,0, 0, 0.2);
+    cursor: pointer;
+
+    &:hover {
+        background: #dfdddd;
+        transition: ease-in-out all 0.2s;
+    }
+}
+
+.actuador-alarma .titulo-alarma {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(30, 27, 57, 0.7);
+}
+
+.actuador-alarma span {
+    font-size: 60px;
+    font-weight: 800;
+}
+
+.actuador-alarma p {
+    font-size: 20px;
+    font-weight: 250;
+    color: rgba(30, 27, 57, 0.7);
 }
 
 .alerta-nivel-agua {
@@ -117,7 +147,6 @@ button {
     justify-content: center;
     flex-direction: column;
     border-radius: 20px;
-    background: #0039D7;
 }
 
 .alerta-nivel-agua .nivel-actual p {
@@ -128,7 +157,7 @@ button {
 
 .alerta-nivel-agua .nivel-actual span {
     font-size: 64px;
-    font-weight: 900;
+    font-weight: 800;
     color: #fff;
 }
 
@@ -143,13 +172,11 @@ button {
 .alerta-nivel-agua .estado-actual p {
     font-size: 20px;
     font-weight: 250;
-    color: #0039D7;
 }
 
 .alerta-nivel-agua .estado-actual span {
     font-size: 64px;
-    font-weight: 900;
-    color: #0039D7;
+    font-weight: 800;
 }
 
 .alerta-nivel-precipitaciones {
@@ -164,7 +191,6 @@ button {
     justify-content: center;
     flex-direction: column;
     border-radius: 20px;
-    background: #5725CD;
 }
 
 .alerta-nivel-precipitaciones .nivel-actual p {
@@ -175,7 +201,7 @@ button {
 
 .alerta-nivel-precipitaciones .nivel-actual span {
     font-size: 64px;
-    font-weight: 900;
+    font-weight: 800;
     color: #fff;
 }
 
@@ -190,12 +216,55 @@ button {
 .alerta-nivel-precipitaciones .estado-actual p {
     font-size: 20px;
     font-weight: 250;
-    color: #5725CD;
 }
 
 .alerta-nivel-precipitaciones .estado-actual span {
     font-size: 64px;
-    font-weight: 900;
+    font-weight: 800;
+}
+
+.actuador-alarma.active {
+    background: #A01AA3;
+    transition: ease-in-out all 0.2s;
+
+    &:hover {
+        background: #931895;
+    }
+}
+
+.actuador-alarma.active .titulo-alarma {
+    color: #fff;
+}
+
+.actuador-alarma.active p {
+    color: #fff;
+}
+
+.actuador-alarma.active svg path {
+    fill: #fff;
+    fill-opacity: 100%;
+}
+
+.nivel-actual.normal {
+    background: #0039D7;
+}
+
+.estado-actual.normal {
+    color: #0039D7;
+}
+
+.nivel-actual.moderado {
+    background: #5725CD;
+}
+
+.estado-actual.moderado {
     color: #5725CD;
 }
 
+.nivel-actual.alto {
+    background: #A01AA3;
+}
+
+.estado-actual.alto {
+    color: #A01AA3;
+}
