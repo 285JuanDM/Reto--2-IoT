@@ -80,13 +80,11 @@ button {
     flex: 1;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: 306px 306px auto;
     gap: 10px;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    margin: 10px auto;
-    padding: 10px 50px;
+    padding: 10px 50px; /* Mismo padding horizontal que el header */
+    box-sizing: border-box;
 }
 
 .grafica-nivel-agua, 
