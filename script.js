@@ -60,7 +60,7 @@ function initCharts() {
             type: 'line',
             height: 250,
             toolbar: {
-                show: false
+                show: true
             },
             animations: {
                 enabled: true,
@@ -100,7 +100,7 @@ function initCharts() {
             type: 'line',
             height: 250,
             toolbar: {
-                show: false
+                show: true
             },
             animations: {
                 enabled: true,
