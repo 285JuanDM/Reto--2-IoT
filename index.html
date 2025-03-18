@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles.css">
-        <title>Document</title>
+        <title>HydroMeter</title>
     </head>
 
     <body>
@@ -46,36 +46,36 @@
             </section>
 
             <section class="alerta-nivel-agua">
-                <div class="nivel-actual alto">
+                <div class="nivel-actual normal">
                     <p>Último valor:</p>
-                    <span>6 cm</span>
+                    <span id="valor-nivel-agua">0 cm</span>
                     <p>Tomado hace 1 minuto</p>
                 </div>
                 
-                <div class="estado-actual alto">
+                <div class="estado-actual normal">
                     <p>Estado del nivel del agua:</p>
-                    <span>¡Alta!</span>
+                    <span id="estado-nivel-agua">Normal</span>
                     <p>Se considera alto de 10 cm en adelante</p>
                 </div>
             </section>
 
             <section class="alerta-nivel-precipitaciones">
-                <div class="nivel-actual moderado">
+                <div class="nivel-actual normal">
                     <p>Último valor:</p>
-                    <span>10 mm</span>
+                    <span id="valor-precipitaciones">0 mm</span>
                     <p>Tomado hace 1 minuto</p>
                 </div>
 
-                <div class="estado-actual moderado">
+                <div class="estado-actual normal">
                     <p>Estado del nivel del precipitaciones:</p>
-                    <span>Moderada</span>
+                    <span id="estado-precipitaciones">Normal</span>
                     <p>Se considera lluvia moderada de 4 cm ~ 6 cm</p>
                 </div>
             </section>
 
             <section class="actuador-alarma">
                 <div class="titulo-alarma">
-                    <span>Alarma apagada</span>
+                    <span id="texto-alarma">Alarma apagada</span>
                     <svg
                         width="40"
                         height="40"
@@ -104,9 +104,10 @@
                     </svg>
                 </div>
 
-                <p class="mensaje-alarma">Click para encender</p>
+                <p class="mensaje-alarma" id="mensaje-alarma">Click para encender</p>
             </section>
         </main>
-        <script type="module" src="script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="script.js"></script>
     </body>
-</html>
+</html> 
