@@ -1,23 +1,431 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles.css">
         <title>HydroMeter</title>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playwrite+RO:wght@100..400&display=swap');
+            
+            *, *::before, *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background: #F9FAFE;
+                font-family: 'Nunito', sans-serif;
+            }
+
+            html, body {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            button {
+                all: unset;
+            }
+
+            .header-top {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: #fff;
+                border-radius: 0 0 40px 40px;
+                box-shadow: 0 1px 2px 0 rgba(0, 4, 255, 0.05);
+                padding: 30px 50px;
+            }
+
+            .header-top .header-titulo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 30px;
+                user-select: none;
+                font-weight: 900;
+                color: #0039D7;
+            }
+
+            .header-top .menu-botones {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .header-top .boton {
+                width: 100px;
+                padding: 10px 20px;
+                border-radius: 10px;
+                font-size: 17px;
+                text-align: center;
+                color: rgb(0, 57, 215);
+                outline: 1px solid rgb(0, 57, 215, 0.5);
+                background: rgb(0, 57, 215, 0.12);
+                transition: ease-in-out all 0.2s;
+                cursor: pointer;
+
+                &:hover {
+                    background: rgb(0, 57, 215, 0.2);
+                    transition: ease-in-out all 0.2s;
+                }
+            }
+
+            .header-top .hora-fecha {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                font-size: 17px;
+                color: #0039D7;
+            }
+
+            .contenido-principal {
+                flex: 1;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto 220px auto;
+                gap: 10px;
+                width: 100%;
+                padding: 20px 5%;
+                box-sizing: border-box;
+            }
+
+            .actuador {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                grid-column: span 2;
+            }
+
+            .grafica-nivel-agua,
+            .grafica-nivel-precipitaciones,
+            .alerta-nivel-agua,
+            .actuador-alarma,
+            .alerta-nivel-precipitaciones,
+            .toogle-alarma-automatica {
+                width: 100%;
+                height: 100%;
+                border-radius: 20px;
+                background: white;
+                box-shadow: 0 2px 6px rgba(0, 4, 255, 0.05);
+            }
+
+            .toogle-alarma-automatica {
+                display: flex;
+                padding: 20px;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .toogle-alarma-automatica span {
+                font-size: 40px;
+                font-weight: 800;
+                color: rgba(30, 27, 57, 0.8);
+            }
+
+            .theme-checkbox {
+                --toggle-size: 20px;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                width: 7.5em; /* Aumentado */
+                height: 3.75em; /* Aumentado */
+                background: -webkit-gradient(linear, left top, right top, color-stop(50%, #efefef), color-stop(50%, #2a2a2a)) no-repeat;
+                background: -o-linear-gradient(left, #efefef 50%, #A01AA3 50%) no-repeat;
+                background: linear-gradient(to right, #efefef 50%, #A01AA3 50%) no-repeat;
+                background-size: 205%;
+                background-position: 0;
+                -webkit-transition: 0.4s;
+                -o-transition: 0.4s;
+                transition: 0.4s;
+                border-radius: 99em;
+                position: relative;
+                cursor: pointer;
+                font-size: var(--toggle-size);
+            }
+            
+            .theme-checkbox::before {
+                content: "";
+                width: 2.75em; /* Aumentado */
+                height: 2.75em; /* Aumentado */
+                position: absolute;
+                top: 0.5em;
+                left: 0.5em;
+                background: -webkit-gradient(linear, left top, right top, color-stop(50%, #efefef), color-stop(50%, #2a2a2a)) no-repeat;
+                background: -o-linear-gradient(left, #efefef 50%, #4b4b4b 50%) no-repeat;
+                background: linear-gradient(to right, #efefef 50%, #4b4b4b 50%) no-repeat;
+                background-size: 205%;
+                background-position: 100%;
+                border-radius: 50%;
+                -webkit-transition: 0.4s;
+                -o-transition: 0.4s;
+                transition: 0.4s;
+            }
+            
+            .theme-checkbox:checked::before {
+                left: calc(100% - 2.75em - 0.5em); /* Ajustado al nuevo tamaño */
+                background-position: 0;
+            }
+            
+            .theme-checkbox:checked {
+                background-position: 100%;
+            }
+
+            .toogle-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 10px;
+                font-size: 20px;
+                color: rgba(30, 27, 57, 0.8);
+            }
+
+            .grafica-nivel-agua, .grafica-nivel-precipitaciones {
+                display: flex;
+                padding: 0 20px;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            .actuador-alarma {
+                display: flex;
+                width: 186%;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                text-align: center;
+                background: #EFEFEF;
+                transition: ease-in-out all 0.2s;
+                outline: 1px solid rgba(0,0, 0, 0.2);
+                cursor: pointer;
+
+                &:hover {
+                    background: #dfdddd;
+                    transition: ease-in-out all 0.2s;
+                }
+            }
+
+            .actuador-alarma .titulo-alarma {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: rgba(30, 27, 57, 0.7);
+            }
+
+            .actuador-alarma span {
+                font-size: 40px;
+                font-weight: 800;
+            }
+
+            .actuador-alarma p {
+                font-size: 20px;
+                font-weight: 250;
+                color: rgba(30, 27, 57, 0.7);
+            }
+
+            .alerta-nivel-agua {
+                display: flex;
+                padding: 10px;
+            }
+
+            .alerta-nivel-agua .nivel-actual {
+                flex: 1.3;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                border-radius: 20px;
+            }
+
+            .alerta-nivel-agua .nivel-actual p {
+                font-size: 15px;
+                font-weight: 250;
+                color: #fff;
+            }
+
+            .alerta-nivel-agua .nivel-actual span {
+                font-size: 40px;
+                font-weight: 800;
+                color: #fff;
+            }
+
+            .alerta-nivel-agua .estado-actual {
+                flex: 3;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            .alerta-nivel-agua .estado-actual p {
+                font-size: 15px;
+                font-weight: 250;
+            }
+
+            .alerta-nivel-agua .estado-actual span {
+                font-size: 40px;
+                font-weight: 800;
+            }
+
+            .alerta-nivel-precipitaciones {
+                display: flex;
+                padding: 10px;
+            }
+
+            .alerta-nivel-precipitaciones .nivel-actual {
+                flex: 1.3;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                border-radius: 20px;
+            }
+
+            .alerta-nivel-precipitaciones .nivel-actual p {
+                font-size: 15px;
+                font-weight: 250;
+                color: #fff;
+            }
+
+            .alerta-nivel-precipitaciones .nivel-actual span {
+                font-size: 40px;
+                font-weight: 800;
+                color: #fff;
+            }
+
+            .alerta-nivel-precipitaciones .estado-actual {
+                flex: 3;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            .alerta-nivel-precipitaciones .estado-actual p {
+                font-size: 15px;
+                font-weight: 250;
+            }
+
+            .alerta-nivel-precipitaciones .estado-actual span {
+                font-size: 40px;
+                font-weight: 800;
+            }
+
+            .actuador-alarma.active {
+                background: #A01AA3;
+                transition: ease-in-out all 0.2s;
+
+                &:hover {
+                    background: #931895;
+                }
+            }
+
+            .actuador-alarma.active .titulo-alarma {
+                color: #fff;
+            }
+
+            .actuador-alarma.active p {
+                color: #fff;
+            }
+
+            .actuador-alarma.active svg path {
+                fill: #fff;
+                fill-opacity: 100%;
+            }
+
+            .nivel-actual.normal {
+                background: #0039D7;
+            }
+
+            .estado-actual.normal {
+                color: #0039D7;
+            }
+
+            .nivel-actual.moderado {
+                background: #5725CD;
+            }
+
+            .estado-actual.moderado {
+                color: #5725CD;
+            }
+
+            .nivel-actual.alto {
+                background: #A01AA3;
+            }
+
+            .estado-actual.alto {
+                color: #A01AA3;
+            }
+
+            #checkbox {
+                display: none;
+            }
+
+            .switch {
+                position: relative;
+                width: 70px;
+                height: 70px;
+                background-color: rgb(99, 99, 99);
+                border-radius: 50%;
+                z-index: 1;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 2px solid rgb(126, 126, 126);
+                box-shadow: 0px 0px 3px rgb(2, 2, 2) inset;
+            }
+
+            .switch svg {
+                width: 1.2em;
+            }
+
+            .switch svg path {
+                fill: rgb(48, 48, 48);
+            }
+
+            #checkbox:checked + .switch {
+                box-shadow: 0px 0px 1px rgb(151, 243, 255) inset,
+                    0px 0px 2px rgb(151, 243, 255) inset, 0px 0px 10px rgb(151, 243, 255) inset,
+                    0px 0px 40px rgb(151, 243, 255), 0px 0px 100px rgb(151, 243, 255),
+                    0px 0px 5px rgb(151, 243, 255);
+                border: 2px solid rgb(255, 255, 255);
+                background-color: rgb(146, 180, 184);
+            }
+
+            #checkbox:checked + .switch svg {
+                filter: drop-shadow(0px 0px 5px rgb(151, 243, 255));
+            }
+
+            #checkbox:checked + .switch svg path {
+                fill: rgb(255, 255, 255);
+            }
+
+        </style>
     </head>
 
     <body>
         <header class="header-top">
             <div class="header-titulo">
                 <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 35.8333C16.3056 35.8333 13.1597 34.5556 10.5625 
-                            32C7.96528 29.4444 6.66667 26.3333 6.66667 22.6667C6.66667 
-                            20.9167 7.00695 19.2431 7.6875 17.6458C8.36806 16.0486 9.33333 
-                            14.6389 10.5833 13.4167L20 4.16667L29.4167 13.4167C30.6667 14.6389 
-                            31.6319 16.0486 32.3125 17.6458C32.9931 19.2431 33.3333 20.9167 
-                            33.3333 22.6667C33.3333 26.3333 32.0347 29.4444 29.4375 32C26.8403 
-                            34.5556 23.6944 35.8333 20 35.8333Z" 
+                    <path d="M20 35.8333C16.3056 35.8333 13.1597 34.5556 10.5625
+                            32C7.96528 29.4444 6.66667 26.3333 6.66667 22.6667C6.66667
+                            20.9167 7.00695 19.2431 7.6875 17.6458C8.36806 16.0486 9.33333
+                            14.6389 10.5833 13.4167L20 4.16667L29.4167 13.4167C30.6667 14.6389
+                            31.6319 16.0486 32.3125 17.6458C32.9931 19.2431 33.3333 20.9167
+                            33.3333 22.6667C33.3333 26.3333 32.0347 29.4444 29.4375 32C26.8403
+                            34.5556 23.6944 35.8333 20 35.8333Z"
                     fill="#0039D7"/>
                 </svg>
 
@@ -73,41 +481,201 @@
                 </div>
             </section>
 
-            <section class="actuador-alarma">
-                <div class="titulo-alarma">
-                    <span id="texto-alarma">Alarma apagada</span>
-                    <svg
-                        width="40"
-                        height="40"
-                        viewBox="0 0 76 76"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-
-                        <path d="M12.6667 60.1667H63.3334V53.8333H12.6667V60.1667ZM25.3334
-                                41.1667H31.6667V31.6667C31.6667 29.925 32.2868 28.434 33.5271
-                                27.1938C34.7674 25.9535 36.2584 25.3333 38 25.3333V19C34.5167
-                                19 31.5348 20.2403 29.0542 22.7208C26.5737 25.2014 25.3334 28.1833
-                                25.3334 31.6667V41.1667ZM22.1667 47.5H53.8334V31.6667C53.8334 27.2861
-                                52.2896 23.5521 49.2021 20.4646C46.1146 17.3771 42.3806 15.8333 38
-                                15.8333C33.6195 15.8333 29.8855 17.3771 26.798 20.4646C23.7105 23.5521
-                                22.1667 27.2861 22.1667 31.6667V47.5ZM12.6667 66.5C10.925 66.5 9.43407
-                                65.8799 8.19379 64.6396C6.95351 63.3993 6.33337 61.9083 6.33337
-                                60.1667V53.8333C6.33337 52.0917 6.95351 50.6007 8.19379 49.3604C9.43407
-                                48.1201 10.925 47.5 12.6667 47.5H15.8334V31.6667C15.8334 25.4917 17.9841
-                                20.2535 22.2855 15.9521C26.5868 11.6507 31.825 9.5 38 9.5C44.175 9.5 49.4132
-                                11.6507 53.7146 15.9521C58.016 20.2535 60.1667 25.4917 60.1667 31.6667V47.5H63.3334C65.075
-                                47.5 66.566 48.1201 67.8063 49.3604C69.0466 50.6007 69.6667 52.0917 69.6667 53.8333V60.1667C69.6667
-                                61.9083 69.0466 63.3993 67.8063 64.6396C66.566 65.8799 65.075 66.5 63.3334 66.5H12.6667Z" 
-                                fill="#1E1B39"
-                                fill-opacity="0.7"/>
-                        
-                    </svg>
-                </div>
-
-                <p class="mensaje-alarma" id="mensaje-alarma">Click para encender</p>
+            
+            <section class="actuador">
+                <section class="actuador-alarma">
+                    <div class="titulo-alarma">
+                        <span id="texto-alarma">Alarma apagada</span>
+                        <svg
+                            width="40"
+                            height="40"
+                            viewBox="0 0 76 76"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+    
+                            <path d="M12.6667 60.1667H63.3334V53.8333H12.6667V60.1667ZM25.3334
+                                    41.1667H31.6667V31.6667C31.6667 29.925 32.2868 28.434 33.5271
+                                    27.1938C34.7674 25.9535 36.2584 25.3333 38 25.3333V19C34.5167
+                                    19 31.5348 20.2403 29.0542 22.7208C26.5737 25.2014 25.3334 28.1833
+                                    25.3334 31.6667V41.1667ZM22.1667 47.5H53.8334V31.6667C53.8334 27.2861
+                                    52.2896 23.5521 49.2021 20.4646C46.1146 17.3771 42.3806 15.8333 38
+                                    15.8333C33.6195 15.8333 29.8855 17.3771 26.798 20.4646C23.7105 23.5521
+                                    22.1667 27.2861 22.1667 31.6667V47.5ZM12.6667 66.5C10.925 66.5 9.43407
+                                    65.8799 8.19379 64.6396C6.95351 63.3993 6.33337 61.9083 6.33337
+                                    60.1667V53.8333C6.33337 52.0917 6.95351 50.6007 8.19379 49.3604C9.43407
+                                    48.1201 10.925 47.5 12.6667 47.5H15.8334V31.6667C15.8334 25.4917 17.9841
+                                    20.2535 22.2855 15.9521C26.5868 11.6507 31.825 9.5 38 9.5C44.175 9.5 49.4132
+                                    11.6507 53.7146 15.9521C58.016 20.2535 60.1667 25.4917 60.1667 31.6667V47.5H63.3334C65.075
+                                    47.5 66.566 48.1201 67.8063 49.3604C69.0466 50.6007 69.6667 52.0917 69.6667 53.8333V60.1667C69.6667
+                                    61.9083 69.0466 63.3993 67.8063 64.6396C66.566 65.8799 65.075 66.5 63.3334 66.5H12.6667Z" 
+                                    fill="#1E1B39"
+                                    fill-opacity="0.7"/>
+                            
+                        </svg>
+                    </div>
+    
+                    <p class="mensaje-alarma" id="mensaje-alarma">Click para encender</p>
+                </section>
+    
+                <section class="toogle-alarma-automatica">
+                    <span>Alarma automática</span>
+                    
+                    <div class="toogle-button">
+                        <input type="checkbox" class="theme-checkbox">
+                        <p>Manual</p>
+                    </div>
+                </section>
             </section>
         </main>
+
+        
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-        <script src="script.js"></script>
+        <script>
+        const socket = new WebSocket('ws://' + window.location.hostname + '/ws');
+
+        // Variables para almacenar las referencias a los elementos del DOM
+        const valorNivelAgua = document.getElementById("valor-nivel-agua");
+        const estadoNivelAgua = document.getElementById("estado-nivel-agua");
+        const valorPrecipitaciones = document.getElementById("valor-precipitaciones");
+        const estadoPrecipitaciones = document.getElementById("estado-precipitaciones");
+        const actuadorAlarma = document.querySelector(".actuador-alarma");
+        const toogleButonAlarma = document.querySelector(".theme-checkbox");
+        const toogleTextAlarma = document.querySelector(".toogle-button p");
+        const textoAlarma = document.getElementById("texto-alarma");
+        const mensajeAlarma = document.getElementById("mensaje-alarma");
+        const nivelActualAgua = document.querySelector(".alerta-nivel-agua .nivel-actual");
+        const estadoActualAgua = document.querySelector(".alerta-nivel-agua .estado-actual");
+        const nivelActualPrecipitaciones = document.querySelector(".alerta-nivel-precipitaciones .nivel-actual");
+        const estadoActualPrecipitaciones = document.querySelector(".alerta-nivel-precipitaciones .estado-actual");
+        
+        // Configuración de las gráficas
+        const optionsAgua = {
+          chart: {
+              type: 'line',
+              height: 250,
+              toolbar: {
+                  show: false
+              },
+              animations: {
+                  enabled: true,
+                  easing: 'easeinout',
+                  speed: 800
+              }
+          },
+          title: {
+              text: 'Nivel de agua',
+              align: 'center'
+          },
+          colors: ['#0039D7'],
+          series: [{
+              name: 'Nivel (cm)',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          }],
+          xaxis: {
+              categories: ['0h', '1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h']
+          },
+          yaxis: {
+              title: {
+                  text: 'Nivel (cm)'
+              }
+          },
+          stroke: {
+              curve: 'smooth',
+              width: 3
+          },
+          markers: {
+              size: 4
+          }
+        };
+
+        const optionsPrecipitacion = {
+            chart: {
+                type: 'line',
+                height: 250,
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    enabled: true,
+                    easing: 'easeinout',
+                    speed: 800
+                }
+            },
+            title: {
+                text: 'Precipitaciones',
+                align: 'center'
+            },
+            colors: ['#5725CD'],
+            series: [{
+                name: 'Nivel (mm)',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            }],
+            xaxis: {
+                categories: ['0h', '1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h']
+            },
+            yaxis: {
+                title: {
+                    text: 'Nivel (mm)'
+                }
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 3
+            },
+            markers: {
+                size: 4
+            }
+        };
+                            
+
+        const graficaAgua = new ApexCharts(document.querySelector(".grafica-nivel-agua"), optionsAgua);
+        graficaAgua.render();
+
+        const graficaPrecipitaciones = new ApexCharts(document.querySelector(".grafica-nivel-precipitaciones"), optionsPrecipitacion);
+        graficaPrecipitaciones.render();
+
+        // Manejo de mensajes entrantes
+        socket.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            
+            valorNivelAgua.textContent = data.nivelAgua + " cm";
+            estadoNivelAgua.textContent = data.estadoAgua.charAt(0).toUpperCase() + data.estadoAgua.slice(1);
+            
+            valorPrecipitaciones.textContent = data.precipitaciones + " mm";
+            estadoPrecipitaciones.textContent = data.estadoPrecipitaciones.charAt(0).toUpperCase() + data.estadoPrecipitaciones.slice(1);
+            
+            actuadorAlarma.classList.toggle("active", data.alarmaActivada);
+            textoAlarma.textContent = data.alarmaActivada ? "Alarma encendida" : "Alarma apagada";
+            mensajeAlarma.textContent = data.alarmaActivada ? "Click para apagar" : "Click para encender";
+            
+            // Actualización de gráficas
+            graficaAgua.updateSeries([{ data: data.aguaHistorico }]);
+            graficaAgua.updateOptions({ xaxis: { categories: data.fechasHistorico } });
+            
+            graficaPrecipitaciones.updateSeries([{ data: data.precipitacionesHistorico }]);
+
+            // Actualización de clases de estado
+            nivelActualAgua.className = `nivel-actual ${data.estadoAgua}`;
+            estadoActualAgua.className = `estado-actual ${data.estadoAgua}`;
+            
+            nivelActualPrecipitaciones.className = `nivel-actual ${data.estadoPrecipitaciones}`;
+            estadoActualPrecipitaciones.className = `estado-actual ${data.estadoPrecipitaciones}`;
+
+        };
+
+        // Evento para activar/desactivar la alarma
+        actuadorAlarma.addEventListener("click", () => {
+            const estado = actuadorAlarma.classList.contains("active") ? "off" : "on";
+            socket.send(`alarma:${estado}`);
+        });
+
+        // Evento para cambiar el modo de la alarma
+        toogleButonAlarma.addEventListener("change", () => {
+            const estado = toogleButonAlarma.checked ? "automatica" : "manual";
+            toogleTextAlarma.textContent = estado.charAt(0).toUpperCase() + estado.slice(1);
+            socket.send(`alarmaAutomatica:${estado}`);
+        });
+
+        </script>
     </body>
-</html> 
+</html>

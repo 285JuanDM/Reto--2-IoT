@@ -6,7 +6,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-  
+
 body {
     background: #F9FAFE;
     font-family: 'Nunito', sans-serif;
@@ -80,18 +80,29 @@ button {
     flex: 1;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto 220px auto;
     gap: 10px;
     width: 100%;
     padding: 20px 5%;
     box-sizing: border-box;
 }
 
+.actuador {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    grid-column: span 2;
+}
+
 .grafica-nivel-agua,
 .grafica-nivel-precipitaciones,
 .alerta-nivel-agua,
 .actuador-alarma,
-.alerta-nivel-precipitaciones {
+.alerta-nivel-precipitaciones,
+.toogle-alarma-automatica {
     width: 100%;
     height: 100%;
     border-radius: 20px;
@@ -99,8 +110,82 @@ button {
     box-shadow: 0 2px 6px rgba(0, 4, 255, 0.05);
 }
 
+.toogle-alarma-automatica {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.toogle-alarma-automatica span {
+    font-size: 40px;
+    font-weight: 800;
+    color: rgba(30, 27, 57, 0.8);
+}
+
+.theme-checkbox {
+    --toggle-size: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 7.5em; /* Aumentado */
+    height: 3.75em; /* Aumentado */
+    background: -webkit-gradient(linear, left top, right top, color-stop(50%, #efefef), color-stop(50%, #2a2a2a)) no-repeat;
+    background: -o-linear-gradient(left, #efefef 50%, #A01AA3 50%) no-repeat;
+    background: linear-gradient(to right, #efefef 50%, #A01AA3 50%) no-repeat;
+    background-size: 205%;
+    background-position: 0;
+    -webkit-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 99em;
+    position: relative;
+    cursor: pointer;
+    font-size: var(--toggle-size);
+}
+  
+.theme-checkbox::before {
+    content: "";
+    width: 2.75em; /* Aumentado */
+    height: 2.75em; /* Aumentado */
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+    background: -webkit-gradient(linear, left top, right top, color-stop(50%, #efefef), color-stop(50%, #2a2a2a)) no-repeat;
+    background: -o-linear-gradient(left, #efefef 50%, #4b4b4b 50%) no-repeat;
+    background: linear-gradient(to right, #efefef 50%, #4b4b4b 50%) no-repeat;
+    background-size: 205%;
+    background-position: 100%;
+    border-radius: 50%;
+    -webkit-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+}
+  
+.theme-checkbox:checked::before {
+    left: calc(100% - 2.75em - 0.5em); /* Ajustado al nuevo tamaño */
+    background-position: 0;
+}
+  
+.theme-checkbox:checked {
+    background-position: 100%;
+}
+
+.toogle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 20px;
+    color: rgba(30, 27, 57, 0.8);
+}
+
 .grafica-nivel-agua, .grafica-nivel-precipitaciones {
     display: flex;
+    padding: 0 20px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -108,10 +193,10 @@ button {
 
 .actuador-alarma {
     display: flex;
+    width: 186%;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    grid-column: span 2;
     text-align: center;
     background: #EFEFEF;
     transition: ease-in-out all 0.2s;
@@ -275,3 +360,48 @@ button {
 .estado-actual.alto {
     color: #A01AA3;
 }
+
+#checkbox {
+    display: none;
+}
+
+.switch {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    background-color: rgb(99, 99, 99);
+    border-radius: 50%;
+    z-index: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(126, 126, 126);
+    box-shadow: 0px 0px 3px rgb(2, 2, 2) inset;
+}
+
+.switch svg {
+    width: 1.2em;
+}
+
+.switch svg path {
+    fill: rgb(48, 48, 48);
+}
+
+#checkbox:checked + .switch {
+    box-shadow: 0px 0px 1px rgb(151, 243, 255) inset,
+        0px 0px 2px rgb(151, 243, 255) inset, 0px 0px 10px rgb(151, 243, 255) inset,
+        0px 0px 40px rgb(151, 243, 255), 0px 0px 100px rgb(151, 243, 255),
+        0px 0px 5px rgb(151, 243, 255);
+    border: 2px solid rgb(255, 255, 255);
+    background-color: rgb(146, 180, 184);
+}
+
+#checkbox:checked + .switch svg {
+    filter: drop-shadow(0px 0px 5px rgb(151, 243, 255));
+}
+
+#checkbox:checked + .switch svg path {
+    fill: rgb(255, 255, 255);
+}
+  
