@@ -1149,6 +1149,6 @@ String getEstadoNivelAgua() {
 }
 
 String getEstadoNivelPrecipitaciones() {
-  if (precipitaciones >= 1) return "lluvia";
-  if (precipitaciones >= 0) return "no-lluvia";
+  if (precipitaciones == 0) return "lluvia";
+  if (precipitaciones == 1) return "no-lluvia";
 }
