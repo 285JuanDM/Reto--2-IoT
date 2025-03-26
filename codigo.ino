@@ -4,6 +4,7 @@
 #include <ArduinoJson.h>
 #include "time.h"
 #include <vector>
+#include <LiquidCrystal_I2C.h>
 
 const char *ssid = "Juanda";
 const char *password = "del1al15.com";
@@ -926,6 +927,11 @@ const char html_page[] PROGMEM = R"rawliteral(
 #define ECHO_PIN  18 // Pin de eco del sensor ultrasónico
 #define RAIN_SENSOR_PIN  4  // Sensor de lluvia (entrada digital)
 #define BUZZER_PIN  19  // Buzzer (salida)
+#define LED_RED_PIN  25  // LED rojo
+#define LED_YELLOW_PIN  26  // LED amarillo
+#define LED_GREEN_PIN  27  // LED verde
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 float nivelAgua = 5.0;
 float precipitaciones = 3.0;
@@ -966,6 +972,13 @@ void setup() {
   pinMode(ECHO_PIN, INPUT);
   pinMode(RAIN_SENSOR_PIN, INPUT);
   pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(LED_RED_PIN, OUTPUT);
+  pinMode(LED_YELLOW_PIN, OUTPUT);
+  pinMode(LED_GREEN_PIN, OUTPUT);
+
+  lcd.init();
+  lcd.backlight();
+  lcd.print("Iniciando...");
 
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -1029,6 +1042,39 @@ void medirSensores(void *parameter) {
 
     nivelAgua = ALTURA_MAQUETA - floor(distance);
     precipitaciones = digitalRead(RAIN_SENSOR_PIN);
+
+
+    if (WiFi.status() != WL_CONNECTED) {
+      
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("N.A.: ");
+      lcd.print(nivelAgua);
+      lcd.print(" cm");
+
+      if (nivelAgua >= UMBRAL_AGUA_ALTO) {
+        lcd.setCursor(0, 1);
+        lcd.print("Alto");
+        digitalWrite(LED_RED_PIN, HIGH);
+        digitalWrite(LED_YELLOW_PIN, LOW);
+        digitalWrite(LED_GREEN_PIN, LOW);
+        digitalWrite(BUZZER_PIN, HIGH);
+      } else if (nivelAgua > UMBRAL_AGUA_MODERADO && nivelAgua < UMBRAL_AGUA_ALTO) {
+        lcd.setCursor(0, 1);
+        lcd.print("Moderado");
+        digitalWrite(LED_YELLOW_PIN, HIGH);
+        digitalWrite(LED_RED_PIN, LOW);
+        digitalWrite(LED_GREEN_PIN, LOW);
+        digitalWrite(BUZZER_PIN, LOW);
+      } else {
+        lcd.setCursor(0, 1);
+        lcd.print("Normal");
+        digitalWrite(LED_RED_PIN, LOW);
+        digitalWrite(LED_YELLOW_PIN, LOW);
+        digitalWrite(LED_GREEN_PIN, HIGH);
+        digitalWrite(BUZZER_PIN, LOW);
+      }
+  }
 
     Serial.printf("Nivel Agua: %.2f cm, Precipitaciones: %.2f \n", nivelAgua, precipitaciones);
     
