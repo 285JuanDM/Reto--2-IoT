@@ -936,6 +936,7 @@ const float UMBRAL_AGUA_MODERADO = 6.0;
 const float UMBRAL_AGUA_ALTO = 10.0;
 const float UMBRAL_PRECIPITACIONES_MODERADO = 4.0;
 const float UMBRAL_PRECIPITACIONES_ALTO = 6.0;
+const int ALTURA_MAQUETA = 28;
 
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
@@ -1001,13 +1002,13 @@ void setup() {
   server.begin();
 
   xTaskCreatePinnedToCore(
-    medirSensores, 
-    "MedirSensores", 
-    4096,  
-    NULL,  
-    1,  
-    NULL,  
-    0  
+    medirSensores,
+    "MedirSensores",
+    4096,
+    NULL,
+    1,
+    NULL,
+    0
   );
 }
 
@@ -1026,7 +1027,7 @@ void medirSensores(void *parameter) {
     long duration = pulseIn(ECHO_PIN, HIGH);
     float distance = (duration * 0.034) / 2;
 
-    nivelAgua = floor(distance);
+    nivelAgua = ALTURA_MAQUETA - floor(distance);
     precipitaciones = digitalRead(RAIN_SENSOR_PIN);
 
     Serial.printf("Nivel Agua: %.2f cm, Precipitaciones: %.2f \n", nivelAgua, precipitaciones);
